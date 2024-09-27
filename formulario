@@ -1,0 +1,121 @@
+<?php
+session_start();
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    require 'vinho.php';
+
+    // Recebendo os dados do formulário
+    $nome = $_POST['nome'];
+    $tipo = $_POST['tipo'];
+    $preco = $_POST['preco'];
+
+    // Criando o objeto Vinho
+    $vinho = new Vinho($nome, $tipo, $preco);
+
+    // Armazenando o objeto na sessão para exibição posterior
+    $_SESSION['vinho'] = serialize($vinho);
+
+    // Verificando o preço
+    if ($vinho->verificarPreco()) {
+        $_SESSION['mensagem'] = "Produto em Oferta!";
+    } else {
+        $_SESSION['mensagem'] = "Produto com o preço normal!";
+    }
+
+    // Redirecionando para a página de exibição
+    header("Location: mostrar_vinho.php");
+    exit();
+}
+?>
+
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cadastro de Vinho</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Arial, Verdana, sans-serif;
+            background: linear-gradient(135deg, #ff7e5f, #feb47b); /* Gradiente suave de laranja a pêssego */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        .container {
+            background-color: rgba(255, 255, 255, 0.9); /* Transparência suave no fundo */
+            padding: 40px;
+            border-radius: 15px;
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.2); /* Sombra mais destacada */
+            max-width: 400px;
+            width: 100%;
+            text-align: center;
+        }
+        h2 {
+            color: #333;
+            margin-bottom: 20px;
+            font-size: 28px;
+            font-weight: bold;
+        }
+        label {
+            display: block;
+            margin-bottom: 10px;
+            font-size: 16px;
+            font-weight: bold;
+            color: #555;
+        }
+        input[type="text"], input[type="number"], select {
+            width: 100%;
+            padding: 12px;
+            margin-bottom: 20px;
+            font-size: 16px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            box-sizing: border-box;
+            transition: all 0.3s ease;
+        }
+        input[type="text"]:focus, input[type="number"]:focus, select:focus {
+            border-color: #ff7e5f;
+            box-shadow: 0 0 5px rgba(255, 126, 95, 0.5);
+            outline: none;
+        }
+        input[type="submit"] {
+            width: 100%;
+            background-color: #ff7e5f;
+            color: white;
+            padding: 14px;
+            font-size: 18px;
+            font-weight: bold;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.3s ease;
+        }
+        input[type="submit"]:hover {
+            background-color: #feb47b;
+            transform: scale(1.05); /* Leve zoom ao passar o mouse */
+        }
+        input[type="submit"]:active {
+            transform: scale(1); /* Remove zoom no clique */
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Cadastro de Vinho</h2>
+        <form method="post">
+            <label for="nome">Nome do Vinho:</label>
+            <input type="text" name="nome" required>
+
+            <label for="tipo">Tipo do Vinho:</label>
+            <input type="text" name="tipo" required>
+
+            <label for="preco">Preço do Vinho (R$):</label>
+            <input type="number" name="preco" step="0.01" required>
+
+            <input type="submit" value="Cadastrar">
+        </form>
+    </div>
+</body>
+</html>
