@@ -1,0 +1,60 @@
+<?php
+class Vinho {
+    // atributos privados que armazenam o nome, tipo e preço do vinho
+    private $nome;
+    private $tipo;
+    private $preco;
+
+    // construtor, inicializa os atributos com os valores passados
+    public function __construct($nome, $tipo, $preco) {
+        // atribui o valor passado para o nome ao atributo nome
+        $this->nome = $nome;
+        // Atribui o valor passado para o tipo ao atributo tipo
+        $this->tipo = $tipo;
+        // Converte o valor passado para float e atribui ao atributo preco
+        $this->preco = floatval($preco);
+    }
+
+    // metodo getter para obter o valor do atributo nome
+    public function getNome() {
+        return $this->nome;
+    }
+
+    // metodo setter para definir o valor do atributo nome
+    public function setNome($nome) {
+        $this->nome = $nome;
+    }
+
+    // metodo getter para obter o valor do atributo tipo
+    public function getTipo() {
+        return $this->tipo;
+    }
+
+    // metodo setter para definir o valor do atributo tipo
+    public function setTipo($tipo) {
+        $this->tipo = $tipo;
+    }
+
+    // Método getter para obter o valor do atributo preco
+    public function getPreco() {
+        return $this->preco;
+    }
+
+    // Método setter para definir o valor do atributo preco
+    // O valor é convertido para float antes de ser atribuído
+    public function setPreco($preco) {
+        $this->preco = floatval($preco);
+    }
+
+    // Metodo que retorna uma string formatada com os dados do vinho (nome, tipo e preço)
+    public function mostrarVinho() {
+        return "Nome: $this->nome, Tipo: $this->tipo, Preço: R$ " . number_format($this->preco, 2, ',', '.');
+    }
+
+    //verifica se o preço é menor que 25 reais
+    // Retorna true se for menor que 25, caso contrário retorna false
+    public function verificarPreco() {
+        return $this->preco < 25;
+    }
+}
+?>
