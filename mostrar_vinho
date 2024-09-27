@@ -1,0 +1,66 @@
+<?php
+session_start();
+if (isset($_SESSION['vinho'])) {
+    require 'vinho.php';
+    
+    // Recuperando o objeto da sessão
+    $vinho = unserialize($_SESSION['vinho']);
+    $mensagem = $_SESSION['mensagem'];
+} else {
+    header("Location: formulario.php");
+    exit();
+}
+?>
+
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dados do Vinho</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Arial, Verdana, sans-serif;
+            background: linear-gradient(135deg, #ff7e5f, #feb47b); /* Gradiente suave de laranja a pêssego */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        .container {
+            background-color: rgba(255, 255, 255, 0.9); /* Fundo branco translúcido */
+            padding: 40px;
+            border-radius: 15px;
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.2); /* Sombra */
+            max-width: 400px;
+            width: 100%;
+            text-align: center;
+        }
+        h2 {
+            color: #333;
+            font-size: 28px;
+            font-weight: bold;
+            margin-bottom: 20px;
+        }
+        p {
+            font-size: 18px;
+            color: #555;
+            margin-bottom: 15px;
+        }
+        .mensagem {
+            font-size: 20px;
+            font-weight: bold;
+            color: #ff7e5f;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Informações do Vinho</h2>
+        <p><?php echo $vinho->mostrarVinho(); ?></p>
+        <p><?php echo $mensagem; ?></p>
+    </div>
+</body>
+</html>
